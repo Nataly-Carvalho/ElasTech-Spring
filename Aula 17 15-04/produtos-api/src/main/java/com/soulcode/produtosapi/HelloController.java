@@ -11,4 +11,22 @@ public class HelloController {
     public String paginaElasTech(){
         return "Olá eu sou a pagina elas tech";
     }
+    @ResponseBody
+    @GetMapping("/soulcode")
+    public String paginasoulcode(){
+        return "Soul code pagina teste";
+    }
+    @GetMapping("/cadastro-produto")
+    public String cadastroProduto(){
+        return "cadastro-produto";
+    }
+    @GetMapping("/cadastro-usuario")
+    public String cadastroUsuario(){
+        return "cadastro-usuario";
+    }
+    @GetMapping("/menu")
+    public String menu(){
+        return "menu";
+    }
+
 }
