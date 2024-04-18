@@ -1,15 +1,26 @@
 package com.soulcode.produtosapi;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 @Controller
 public class HelloController {
-    @ResponseBody
-    @GetMapping("/elastech")
-    public String paginaElasTech(){
-        return "Olá eu sou a pagina elas tech";
+    @RequestMapping(value ="/elastech", method = RequestMethod.POST)
+    public String paginaElasTech(@RequestParam String nome, @RequestParam int idade, Model model){
+
+    if (idade >= 18){
+        model.addAttribute("nome", nome);
+        model.addAttribute("idade", idade);
+        return "maior-idade";
+    }else{
+        int anosFaltando = 18 - idade;
+
+        model.addAttribute("nome", nome);
+        model.addAttribute("idade", idade);
+        model.addAttribute("anosFaltando", anosFaltando);
+        return "menor-idade";
+    }
+
     }
     @ResponseBody
     @GetMapping("/soulcode")
