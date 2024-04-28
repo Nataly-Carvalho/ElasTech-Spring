@@ -33,7 +33,7 @@ public class UsuarioController {
         List<Usuario> usuarios = this.usuarioRepository.findAll();
         return usuarios;
     }
-    @RequestMapping(value = "/mostarusuario/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/mostrarusuario/{id}", method = RequestMethod.GET)
     public Usuario findById(@PathVariable Long id) {
         Optional<Usuario> usuario = this.usuarioRepository.findById(id);
 
