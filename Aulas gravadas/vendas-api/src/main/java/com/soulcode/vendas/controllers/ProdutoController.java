@@ -1,55 +1,47 @@
 package com.soulcode.vendas.controllers;
 
-import com.soulcode.vendas.models.Produto;
-import com.soulcode.vendas.repositories.ProdutoRepository;
+
+import com.soulcode.vendas.models.dtos.ProdutoDTO;
+import com.soulcode.vendas.services.ProdutosService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 public class ProdutoController {
 
     @Autowired
-    private ProdutoRepository produtoRepository;
+    private ProdutosService produtosService;
 
     @RequestMapping(value = "/produtos", method = RequestMethod.POST)
-    public Produto save(@RequestBody Produto produto){
-        produto = this.produtoRepository.save(produto);
-        return produto;
+    public ProdutoDTO save(@RequestBody  @Valid ProdutoDTO dto){
+        return produtosService.save(dto);
+
     }
 
     @RequestMapping(value = "/produtos", method = RequestMethod.GET)
-    public List<Produto> findAll(){
-        List<Produto> produtos = this.produtoRepository.findAll();
-        return produtos;
+    public List<ProdutoDTO> findAll(){
+        return produtosService.findAll();
+
     }
 
     @RequestMapping(value = "/produtos/{id}", method = RequestMethod.GET)
-    public Produto findById(@PathVariable Long id){
-        Optional<Produto>resultado = this.produtoRepository.findById(id);
-        if (resultado.isEmpty()){
-            throw new RuntimeException("O produto não foi encontrado");
-        }else {
-            return resultado.get();
-        }
+    public ProdutoDTO findById(@PathVariable Long id){
+        return produtosService.findById(id);
 
     }
 
     @RequestMapping(value = "/produtos/{id}", method = RequestMethod.DELETE)
-    public Produto delete(@PathVariable Long id){
-        Produto produto = findById(id);
-        this.produtoRepository.deleteById(id);
-        return produto;
+    public ProdutoDTO delete(@PathVariable Long id){
+       return this.produtosService.deleteById(id);
     }
 
     @RequestMapping(value = "/produtos/{id}", method = RequestMethod.PUT)
-    public Produto updateById(@PathVariable Long id,@RequestBody Produto produto ){
-        this.findById(id);
-        produto.setId(id);
-        produto = this.produtoRepository.save(produto);
-        return produto;
+    public ProdutoDTO updateById(@RequestBody  @Valid ProdutoDTO dto, @PathVariable Long id){
+        return this.produtosService.updateById(dto, id);
     }
 
 }
